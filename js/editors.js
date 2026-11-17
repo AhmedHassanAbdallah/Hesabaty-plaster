@@ -361,7 +361,10 @@
       r.qty ? ['سعر الوحدة شامل', U.moneyT(r.unitPrice)] : null,
       r.progress ? ['قيمة المنفذ (' + fq(r.progress, 0) + '%)', U.moneyT(r.doneValue)] : null
     ].filter(Boolean);
+    const noPrice = r.materials.filter(m => !m.price && m.packs > 0).map(m => m.name);
     return `<div class="kv">${rows.map(x => `<div class="kv-row"><span>${esc(x[0])}</span><strong class="num">${esc(x[1])}</strong></div>`).join('')}</div>
+      ${noPrice.length ? `<div class="note orange mt"><b>تنبيه:</b> خامات بدون سعر (محسوبة بصفر): ${noPrice.map(esc).join('، ')}. اكتب السعر هنا أو في المخزن.</div>` : ''}
+      ${!r.qty && r.unit !== 'lump' ? `<div class="note orange mt"><b>تنبيه:</b> الكمية صفر — راجع القياس أو اكتب الكمية يدوياً.</div>` : ''}
       <div class="total-bar"><span>إجمالي البند</span><strong>${money(r.total)}</strong></div>`;
   }
 

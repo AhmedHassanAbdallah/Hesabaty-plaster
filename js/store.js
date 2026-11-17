@@ -233,7 +233,8 @@
     const zk = Cat.ZONE_KINDS[kind] || Cat.ZONE_KINDS.other;
     const p = opts && opts.project;
     const color = Cat.ZONE_COLORS[(p ? p.zones.length : 0) % Cat.ZONE_COLORS.length];
-    const z = { id: uid(), kind, name: zk.name, color, finish: '', notes: '', measure: newMeasure(zk.mode) };
+    const SHORT = { room: 'غرفة', wall: 'حوائط', other: 'منطقة' };
+    const z = { id: uid(), kind, name: SHORT[kind] || zk.name, color, finish: '', notes: '', measure: newMeasure(zk.mode) };
     if (zk.mode === 'facade') z.measure.rules = Object.assign(clone(db().settings.defaults.rules), {});
     return z;
   }

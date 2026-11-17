@@ -476,7 +476,7 @@
     U.optionSheet('نوع المنطقة', Object.keys(C.ZONE_KINDS).map(k => ({ v: k, label: C.ZONE_KINDS[k].name, sub: { room: 'طول × عرض × ارتفاع', shapes: 'أشكال هندسية', facade: 'عرض × أدوار × ارتفاع', linear: 'أطوال بالمتر الطولي', manual: 'مساحة جاهزة' }[C.ZONE_KINDS[k].mode], icon: C.ZONE_KINDS[k].mode === 'facade' ? 'facade' : k === 'room' ? 'home' : 'map', cls: C.ZONE_KINDS[k].mode === 'facade' ? 'orange' : '' })), k => {
       const z = S.newZone(k, { project: p });
       const same = p.zones.filter(x => x.kind === k).length;
-      if (same) z.name += ' ' + (same + 1);
+      if (same || k === 'room') z.name += ' ' + (same + 1);
       p.zones.push(z); S.save();
       U.go('zone', p.id, z.id);
     });
